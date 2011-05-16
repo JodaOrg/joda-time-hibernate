@@ -19,8 +19,8 @@
   <mailingLists>
     <mailingList>
       <name>Joda Interest list</name>
-      <subscribe>https://lists.sourceforge.net/lists/listinfo/joda-interest</subscribe>
-      <unsubscribe>https://lists.sourceforge.net/lists/listinfo/joda-interest</unsubscribe>
+      <subscribe>http://lists.sourceforge.net/lists/listinfo/joda-interest</subscribe>
+      <unsubscribe>http://lists.sourceforge.net/lists/listinfo/joda-interest</unsubscribe>
       <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=joda-interest</archive>
     </mailingList>
   </mailingLists>
@@ -59,9 +59,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:http://joda-time.svn.sourceforge.net/svnroot/joda-time/trunk/JodaTimeContrib/hibernate/</connection>
-    <developerConnection>scm:svn:https://joda-time.svn.sourceforge.net/svnroot/joda-time/trunk/JodaTimeContrib/hibernate/</developerConnection>
-    <url>http://joda-time.svn.sourceforge.net/viewvc/joda-time/trunk/JodaTimeContrib/hibernate/</url>
+    <connection>scm:git:git@github.com:JodaOrg/joda-time-hibernate.git</connection>
+    <developerConnection>scm:git:git@github.com:JodaOrg/joda-time-hibernate.git</developerConnection>
+    <url>https://github.com/JodaOrg/joda-time-hibernate</url>
   </scm>
   <organization>
     <name>Joda.org</name>
@@ -171,8 +171,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptors>
-            <descriptor>src/main/assembly/src.xml</descriptor>
-            <descriptor>src/main/assembly/bin.xml</descriptor>
+            <descriptor>src/main/assembly/dist.xml</descriptor>
           </descriptors>
           <tarLongFileMode>gnu</tarLongFileMode>
         </configuration>
@@ -272,12 +271,8 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>2.2</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
+        <version>2.3</version>
         <reportSets>
           <reportSet>
             <reports>
@@ -285,6 +280,11 @@
             </reports>
           </reportSet>
         </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.2</version>
       </plugin>
   	</plugins>
   </reporting>
@@ -305,7 +305,7 @@
     <site>
       <id>sf-web-joda-time-hibernate</id>
       <name>Sourceforge Site</name>
-      <url>scp://shell.sourceforge.net/home/groups/j/jo/joda-time/htdocs/contrib/hibernate</url>
+      <url>scpexe://shell.sourceforge.net/home/project-web/joda-time/htdocs/contrib/hibernate</url>
     </site>
     <downloadUrl>http://oss.sonatype.org/content/repositories/joda-releases</downloadUrl>
   </distributionManagement>
