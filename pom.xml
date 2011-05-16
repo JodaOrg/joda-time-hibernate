@@ -303,7 +303,7 @@
       <layout>default</layout>
     </snapshotRepository>
     <site>
-      <id>sf-web-joda-time-hibernate</id>
+      <id>sf-web-joda-time</id>
       <name>Sourceforge Site</name>
       <url>scpexe://shell.sourceforge.net/home/project-web/joda-time/htdocs/contrib/hibernate</url>
     </site>

@@ -40,7 +40,7 @@ Various documentation is available:
 <li>The javadoc for the <a href="apidocs/index.html">current release</a></li>
 <li>The <a href="userguide.html">user guide</a></li>
 <!--li>A <a href="faq.html">FAQ</a> list</li-->
-<li>The <a href="http://joda-time.svn.sourceforge.net/viewvc/joda-time/trunk/JodaTimeContrib/hibernate/">Subversion repository</a></li>
+<li>The <a href="https://github.com/JodaOrg/joda-time-hibernate">GitHub</a> source repository</li>
 </ul>
 </p>
 </section>
@@ -54,7 +54,8 @@ Please bear in mind that this project is separate from Joda-Time itself.
 </p>
 <p>
 The dependencies are Joda-Time 1.5 or later and Hibernate 3.0 (plus associated dependencies).
-We recommend JDK 1.4 or later, and have performed no testing on earlier JDKs.
+(See GitHub source code for Hibernate v3.6 code)
+We recommend JDK 1.5 or later, and have performed no testing on earlier JDKs.
 </p>
 </section>
 
@@ -70,11 +71,11 @@ Support on bugs, library usage or enhancement requests is available via:
 </ul>
 <p>
 <br />
-</p>
-<p>
+<br />
+<br />
+<br />
 <br />
 </p>
 </section>
-
 </body>
 </document>

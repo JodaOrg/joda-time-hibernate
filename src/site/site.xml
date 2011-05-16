@@ -3,12 +3,12 @@
   <publishDate position="navigation-bottom" format="yyyy-MM-dd"/>
   <bannerLeft>
     <name>Joda.org</name>
-    <src>http://joda-time.sourceforge.net/contrib/hibernate/images/joda.png</src>
+    <!--src>http://joda-time.sourceforge.net/contrib/hibernate/images/joda.png</src-->
     <href>http://joda.sourceforge.net/</href>
   </bannerLeft>
   <bannerRight>
     <name>Joda Time</name>
-    <src>http://joda-time.sourceforge.net/contrib/hibernate/images/jodatime.png</src>
+    <!--src>http://joda-time.sourceforge.net/contrib/hibernate/images/jodatime.png</src-->
     <href>http://joda-time.sourceforge.net/</href>
   </bannerRight>
 
@@ -30,22 +30,28 @@
     </menu>
 
     <menu name="Development">
+      <item name="GitHub (Source code)" href="https://github.com/JodaOrg/joda-time-hibernate"/>
       <item name="Sourceforge" href="http://sourceforge.net/projects/joda-time/"/>
       <item name="Mailing lists" href="mail-lists.html"/>
       <item name="Tasks" href="tasks.html"/>
-      <item name="Subversion" href="http://joda-time.svn.sourceforge.net/viewvc/joda-time/trunk/JodaTimeContrib/hibernate/"/>
+      <!--item name="Subversion" href="http://joda-time.svn.sourceforge.net/viewvc/joda-time/trunk/JodaTimeContrib/hibernate/"/-->
       <item name="Javadoc (Development)" href="apidocs/index.html"/>
     </menu>
 
     <menu name="Joda">
       <item name="Joda home" href="http://joda.sourceforge.net"/>
-      <item name="Time" href="http://joda-time.sourceforge.net/index.html"/>
+      <item name="Beans" href="http://joda-beans.sourceforge.net/index.html"/>
+      <item name="Convert" href="http://joda-convert.sourceforge.net/index.html"/>
       <item name="Money" href="http://joda-money.sourceforge.net/index.html"/>
       <item name="Primitives" href="http://joda-primitives.sourceforge.net/index.html"/>
-      <item name="Beans" href="http://joda-beans.sourceforge.net/index.html"/>
+      <item name="Time" href="http://joda-time.sf.net/index.html"/>
     </menu>
 
     <menu ref="reports"/>
+
+    <menu name="Website">
+      <item name="Privacy" href="privacy.html"/>
+    </menu>
   </body>
 
   <poweredBy>

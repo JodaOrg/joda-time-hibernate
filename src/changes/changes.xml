@@ -8,7 +8,13 @@
   <body>
 
     <!-- types are add, fix, remove, update -->
-    <release version="1.2" date="2009-xx-xx" description="Version 1.2">
+    <release version="1.3" date="TODO" description="Version 1.3">
+      <action dev="scolebourne" type="fix">
+        Move to Hibernate 3.6 and optional dependencies
+      </action>              
+    </release>
+
+    <release version="1.2" date="2009-11-15" description="Version 1.2">
       <action dev="scolebourne" type="fix">
         Use LocalDate.toDateTimeAtStartOfDay() [2461322]
       </action>              
