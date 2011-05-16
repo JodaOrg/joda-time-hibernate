@@ -7,7 +7,7 @@
   <groupId>joda-time</groupId>
   <artifactId>joda-time-hibernate</artifactId>
   <packaging>jar</packaging>
-  <name>Joda time Hibernate support</name>
+  <name>Joda-Time Hibernate support</name>
   <version>1.3-SNAPSHOT</version>
   <description>Contribution to Joda-Time that adds Hibernate support</description>
   <url>http://joda-time.sourceforge.net/contrib/hibernate</url>
@@ -18,7 +18,7 @@
   <inceptionYear>2005</inceptionYear>
   <mailingLists>
     <mailingList>
-      <name>Joda Interest list</name>
+      <name>Joda Time Interest list</name>
       <subscribe>http://lists.sourceforge.net/lists/listinfo/joda-interest</subscribe>
       <unsubscribe>http://lists.sourceforge.net/lists/listinfo/joda-interest</unsubscribe>
       <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=joda-interest</archive>
