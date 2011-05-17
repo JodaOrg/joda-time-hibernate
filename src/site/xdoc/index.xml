@@ -27,7 +27,7 @@ It aims to provide the classes necessary to persist Joda-Time objects.
   &lt;% pageContext.setAttribute("now", new org.joda.time.DateTime()); %&gt;
   <b>&lt;joda:format value="${now}" style="SM" /&gt;</b>
 </source>-->
-Version 1.2 was released on 2009-11-15 -
+Version 1.3 was released on 2011-05-16 -
 <a href="http://sourceforge.net/projects/joda-time/files/joda-time-hibernate/">Download now</a>
 </p>
 </section>
@@ -48,13 +48,13 @@ Various documentation is available:
 
 <section name="Releases">
 <p>
-<a href="http://sourceforge.net/projects/joda-time/files/joda-time-hibernate/1.2/">Release 1.2</a>
+<a href="http://sourceforge.net/projects/joda-time/files/joda-time-hibernate/1.3/">Release 1.3</a>
 is the current latest release.
 Please bear in mind that this project is separate from Joda-Time itself.
 </p>
 <p>
-The dependencies are Joda-Time 1.5 or later and Hibernate 3.0 (plus associated dependencies).
-(See GitHub source code for Hibernate v3.6 code)
+The dependencies are Joda-Time 1.5 or later and Hibernate 3.6 (plus associated dependencies).
+The Maven POM defines the dependencies as "provided", so you must specify them independently of this project.
 We recommend JDK 1.5 or later, and have performed no testing on earlier JDKs.
 </p>
 </section>

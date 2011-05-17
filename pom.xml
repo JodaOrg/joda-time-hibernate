@@ -8,7 +8,7 @@
   <artifactId>joda-time-hibernate</artifactId>
   <packaging>jar</packaging>
   <name>Joda-Time Hibernate support</name>
-  <version>1.3-SNAPSHOT</version>
+  <version>1.3</version>
   <description>Contribution to Joda-Time that adds Hibernate support</description>
   <url>http://joda-time.sourceforge.net/contrib/hibernate</url>
   <issueManagement>
