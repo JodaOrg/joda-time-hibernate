@@ -1,6 +1,6 @@
 Package: org.joda.time
 Extension-Name: joda-time-hibernate
-Specification-Title: Joda Time Hibernate support
+Specification-Title: Joda-Time Hibernate support
 Specification-Vendor: Joda.org
 Specification-Version: 1.3
 Implementation-Vendor: Joda.org
@@ -15,5 +15,4 @@ Bundle-Version: 1.3
 Import-Package: org.joda.time;version="1.6.2"
 Export-Package: org.joda.time.contrib.hibernate;version=1.3
 Bundle-License: Apache 2.0
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-DocURL: http://joda-time.sourceforge.net/contrib/hibernate/
