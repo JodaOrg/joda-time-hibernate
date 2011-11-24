@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2009 Stephen Colebourne
+ *  Copyright 2001-2011 Stephen Colebourne
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,31 +18,27 @@ package org.joda.time.contrib.hibernate;
 import java.io.Serializable;
 import org.joda.time.DateTime;
 
-public class ThingWithDateTime implements Serializable
-{
-	private int id;
-	private DateTime dateTime;
+public class ThingWithDateTime implements Serializable {
+    private int id;
+    private DateTime dateTime;
 
-	public ThingWithDateTime()
-	{}
-	
-	public int getId()
-	{
-		return id;
-	}
+    public ThingWithDateTime() {
+    }
 
-	public void setId(int id)
-	{
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public DateTime getDateTime()
-	{
-		return dateTime;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setDateTime(DateTime dateTime)
-	{
-		this.dateTime = dateTime;
-	}
+    public DateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(DateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
 }

@@ -7,7 +7,7 @@
 
     <class name="ThingWithDateTime">
         <id name="id"/>
-		<property  name="dateTime" type="org.joda.time.contrib.hibernate.PersistentDateTimeAsBigInt"/>
+		<property name="dateTime" type="org.joda.time.contrib.hibernate.PersistentDateTimeAsBigInt"/>
 
     </class>
 
