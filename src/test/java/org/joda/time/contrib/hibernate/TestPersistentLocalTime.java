@@ -29,7 +29,8 @@ public class TestPersistentLocalTime extends HibernateTestCase
     {
         new LocalTime(14, 2, 25),
         new LocalTime(23, 59, 59, 999),
-		new LocalTime(0, 0, 0)
+		new LocalTime(0, 0, 0),
+        new LocalTime(12, 02, 15)
     };
 
     public void testSimpleStore() throws SQLException
@@ -47,6 +48,7 @@ public class TestPersistentLocalTime extends HibernateTestCase
             event.setLocalTime(writeReadTime);
 			event.setLocalTime2(writeReadTime);
 			event.setLocalTime3(writeReadTime);
+			event.setLocalTime4(writeReadTime);
 
             session.save(event);
         }
@@ -66,6 +68,7 @@ public class TestPersistentLocalTime extends HibernateTestCase
             assertNotNull("get failed - returned null", eventReread.getLocalTime());
 			assertNotNull("get failed - returned null", eventReread.getLocalTime2());
 			assertNotNull("get failed - returned null", eventReread.getLocalTime3());
+			assertNotNull("get failed - returned null", eventReread.getLocalTime4());
 
             // we might loose the millis, depends on database
             assertEquals("get failed - returned different time (TIME)",
@@ -79,6 +82,10 @@ public class TestPersistentLocalTime extends HibernateTestCase
 			assertEquals("get failed - returned different time (STRING)",
 				writeReadTime.getMillisOfDay(),
 				eventReread.getLocalTime3().getMillisOfDay());
+			
+			assertEquals("get failed - returned different time (TIMESTAMP)",
+					writeReadTime.getMillisOfDay(),
+					eventReread.getLocalTime4().getMillisOfDay());
 
 			session.close();
         }

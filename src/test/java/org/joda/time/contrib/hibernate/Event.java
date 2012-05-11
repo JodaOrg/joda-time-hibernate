@@ -33,6 +33,7 @@ public class Event implements Serializable
 	private LocalTime localTime;
 	private LocalTime localTime2;
 	private LocalTime localTime3;
+	private LocalTime localTime4;
 	private LocalDateTime localDateTime;
 
 	public Event()
@@ -97,6 +98,16 @@ public class Event implements Serializable
 	public void setLocalTime3(LocalTime localTime3)
 	{
 		this.localTime3 = localTime3;
+	}
+	
+	public LocalTime getLocalTime4()
+	{
+		return localTime4;
+	}
+
+	public void setLocalTime4(LocalTime localTime4)
+	{
+		this.localTime4 = localTime4;
 	}
 
     public LocalDateTime getLocalDateTime()
