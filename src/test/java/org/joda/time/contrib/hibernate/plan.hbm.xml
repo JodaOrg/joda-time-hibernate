@@ -5,15 +5,12 @@
 
 <hibernate-mapping package="org.joda.time.contrib.hibernate">
 
-        <class name="Plan">
-
-                <id name="id" />
-
-                <property type="org.joda.time.contrib.hibernate.PersistentInterval" name="period">
-                    <column name="startDate" />
-                    <column name="endDate" />
-                </property>
-
-        </class>
+    <class name="Plan">
+        <id name="id" />
+        <property type="org.joda.time.contrib.hibernate.PersistentInterval" name="period">
+            <column name="startDate" />
+            <column name="endDate" />
+        </property>
+    </class>
 
 </hibernate-mapping>

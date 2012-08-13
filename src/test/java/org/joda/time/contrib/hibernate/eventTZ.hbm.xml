@@ -5,15 +5,12 @@
 
 <hibernate-mapping package="org.joda.time.contrib.hibernate">
 
-        <class name="EventTZ">
-
-                <id name="id" />
-
-                <property type="org.joda.time.contrib.hibernate.PersistentDateTimeTZ" name="dateTime">
-                    <column name="dateTimeTime"/>
-                    <column name="dateTimeTZ"/>
-                </property>
-
-        </class>
+    <class name="EventTZ">
+        <id name="id" />
+        <property type="org.joda.time.contrib.hibernate.PersistentDateTimeTZ" name="dateTime">
+            <column name="dateTimeTime"/>
+            <column name="dateTimeTZ"/>
+        </property>
+    </class>
 
 </hibernate-mapping>

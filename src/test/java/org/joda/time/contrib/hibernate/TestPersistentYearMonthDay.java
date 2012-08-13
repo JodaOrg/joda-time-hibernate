@@ -64,12 +64,12 @@ public class TestPersistentYearMonthDay extends HibernateTestCase
 
             assertEquals("get failed - returned different date", writeReadTime, eventReread.getStartDate());
         }
-		
-		session.close();
+        
+        session.close();
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
+    }
 }

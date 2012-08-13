@@ -27,34 +27,34 @@ import java.sql.Statement;
 
 public abstract class HibernateTestCase extends TestCase
 {
-	private SessionFactory factory;
+    private SessionFactory factory;
     private Configuration cfg;
 
     protected SessionFactory getSessionFactory()
-	{
-		if (this.factory == null)
-		{
+    {
+        if (this.factory == null)
+        {
                     cfg = new Configuration();
 
                     setupConfiguration(cfg);
 
-			cfg.setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver");
-			cfg.setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:hbmtest" + getClass().getName());
-			cfg.setProperty("hibernate.dialect", HSQLDialect.class.getName());
+            cfg.setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver");
+            cfg.setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:hbmtest" + getClass().getName());
+            cfg.setProperty("hibernate.dialect", HSQLDialect.class.getName());
 
-			cfg.setProperty("hibernate.show_sql", "true");
-			SessionFactory factory = cfg.buildSessionFactory();
+            cfg.setProperty("hibernate.show_sql", "true");
+            SessionFactory factory = cfg.buildSessionFactory();
 
-			SchemaUpdate update = new SchemaUpdate(cfg);
-			update.execute(true, true);
+            SchemaUpdate update = new SchemaUpdate(cfg);
+            update.execute(true, true);
 
-			this.factory = factory;
-		}
-		return factory;
-	}
+            this.factory = factory;
+        }
+        return factory;
+    }
 
-	protected void tearDown() throws Exception
-	{
+    protected void tearDown() throws Exception
+    {
             final String[] dropSQLs = cfg.generateDropSchemaScript(new HSQLDialect());
             final Connection connection = getSessionFactory().openSession().connection();
             try {
@@ -68,11 +68,11 @@ public abstract class HibernateTestCase extends TestCase
             }
 
             if (this.factory != null)
-		{
-			this.factory.close();
-			this.factory = null;
-		}
-	}
+        {
+            this.factory.close();
+            this.factory = null;
+        }
+    }
 
-	protected abstract void setupConfiguration(Configuration cfg);
+    protected abstract void setupConfiguration(Configuration cfg);
 }

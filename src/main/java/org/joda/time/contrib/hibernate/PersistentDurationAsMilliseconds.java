@@ -35,72 +35,72 @@ import org.joda.time.Duration;
  */
 public class PersistentDurationAsMilliseconds implements UserType, Serializable {
 
-	private static final int[] SQL_TYPES = new int[] { Types.BIGINT };
+    private static final int[] SQL_TYPES = new int[] { Types.BIGINT };
 
-	public Class returnedClass() {
-		return Duration.class;
-	}
+    public Class returnedClass() {
+        return Duration.class;
+    }
 
-	public int[] sqlTypes() {
-		return SQL_TYPES;
-	}
+    public int[] sqlTypes() {
+        return SQL_TYPES;
+    }
 
-	public Object nullSafeGet(ResultSet resultSet, String[] strings,
-			Object object) throws HibernateException, SQLException {
-		BigInteger b = (BigInteger) StandardBasicTypes.BIG_INTEGER.nullSafeGet(
-				resultSet, strings[0]);
-		if (b == null) {
-			return null;
-		}
+    public Object nullSafeGet(ResultSet resultSet, String[] strings,
+            Object object) throws HibernateException, SQLException {
+        BigInteger b = (BigInteger) StandardBasicTypes.BIG_INTEGER.nullSafeGet(
+                resultSet, strings[0]);
+        if (b == null) {
+            return null;
+        }
 
-		return new Duration(b.longValue());
-	}
+        return new Duration(b.longValue());
+    }
 
-	public void nullSafeSet(PreparedStatement preparedStatement, Object value,
-			int index) throws HibernateException, SQLException {
-		if (value == null) {
-			StandardBasicTypes.BIG_INTEGER.nullSafeSet(preparedStatement, null,
-					index);
-		} else {
-			StandardBasicTypes.BIG_INTEGER.nullSafeSet(preparedStatement,
-					BigInteger.valueOf((Long) value), index);
-		}
-	}
+    public void nullSafeSet(PreparedStatement preparedStatement, Object value,
+            int index) throws HibernateException, SQLException {
+        if (value == null) {
+            StandardBasicTypes.BIG_INTEGER.nullSafeSet(preparedStatement, null,
+                    index);
+        } else {
+            StandardBasicTypes.BIG_INTEGER.nullSafeSet(preparedStatement,
+                    BigInteger.valueOf((Long) value), index);
+        }
+    }
 
-	public boolean equals(Object x, Object y) throws HibernateException {
-		if (x == y) {
-			return true;
-		}
-		if (x == null || y == null) {
-			return false;
-		}
-		return x.equals(y);
-	}
+    public boolean equals(Object x, Object y) throws HibernateException {
+        if (x == y) {
+            return true;
+        }
+        if (x == null || y == null) {
+            return false;
+        }
+        return x.equals(y);
+    }
 
-	public int hashCode(Object object) throws HibernateException {
-		return object.hashCode();
-	}
+    public int hashCode(Object object) throws HibernateException {
+        return object.hashCode();
+    }
 
-	public Object deepCopy(Object value) throws HibernateException {
-		return value;
-	}
+    public Object deepCopy(Object value) throws HibernateException {
+        return value;
+    }
 
-	public boolean isMutable() {
-		return false;
-	}
+    public boolean isMutable() {
+        return false;
+    }
 
-	public Serializable disassemble(Object value) throws HibernateException {
-		return (Serializable) value;
-	}
+    public Serializable disassemble(Object value) throws HibernateException {
+        return (Serializable) value;
+    }
 
-	public Object assemble(Serializable cached, Object value)
-			throws HibernateException {
-		return cached;
-	}
+    public Object assemble(Serializable cached, Object value)
+            throws HibernateException {
+        return cached;
+    }
 
-	public Object replace(Object original, Object target, Object owner)
-			throws HibernateException {
-		return original;
-	}
+    public Object replace(Object original, Object target, Object owner)
+            throws HibernateException {
+        return original;
+    }
 
 }

@@ -7,9 +7,7 @@
 
     <class name="ThingWithInstant">
         <id name="id"/>
-		<property  name="instant" type="org.joda.time.contrib.hibernate.PersistentInstant"/>
-
+        <property  name="instant" type="org.joda.time.contrib.hibernate.PersistentInstant"/>
     </class>
-
 
 </hibernate-mapping>

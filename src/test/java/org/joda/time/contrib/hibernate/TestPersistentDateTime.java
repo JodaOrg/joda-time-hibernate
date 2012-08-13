@@ -106,13 +106,13 @@ public class TestPersistentDateTime extends HibernateTestCase
             assertEquals("get failed - returned different time",
                 writeReadTime, eventReread.getDateTime());
         }
-		
-		session.close();
+        
+        session.close();
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
+    }
 }

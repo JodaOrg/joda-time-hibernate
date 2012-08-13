@@ -21,29 +21,29 @@ import org.joda.time.Instant;
 
 public class ThingWithInstant implements Serializable
 {
-	private int id;
-	private Instant instant;
+    private int id;
+    private Instant instant;
 
-	public ThingWithInstant()
-	{}
-	
-	public int getId()
-	{
-		return id;
-	}
+    public ThingWithInstant()
+    {}
+    
+    public int getId()
+    {
+        return id;
+    }
 
-	public void setId(int id)
-	{
-		this.id = id;
-	}
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
-	public Instant getInstant()
-	{
-		return instant;
-	}
+    public Instant getInstant()
+    {
+        return instant;
+    }
 
-	public void setInstant(Instant instant)
-	{
-		this.instant = instant;
-	}
+    public void setInstant(Instant instant)
+    {
+        this.instant = instant;
+    }
 }

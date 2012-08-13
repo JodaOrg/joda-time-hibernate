@@ -29,12 +29,12 @@ public class TestPersistentLocalTime extends HibernateTestCase
     {
         new LocalTime(14, 2, 25),
         new LocalTime(23, 59, 59, 999),
-		new LocalTime(0, 0, 0),
+        new LocalTime(0, 0, 0),
         new LocalTime(12, 02, 15)
     };
 
     public void testSimpleStore() throws SQLException
-	{
+    {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
@@ -46,9 +46,9 @@ public class TestPersistentLocalTime extends HibernateTestCase
             Event event = new Event();
             event.setId(i);
             event.setLocalTime(writeReadTime);
-			event.setLocalTime2(writeReadTime);
-			event.setLocalTime3(writeReadTime);
-			event.setLocalTime4(writeReadTime);
+            event.setLocalTime2(writeReadTime);
+            event.setLocalTime3(writeReadTime);
+            event.setLocalTime4(writeReadTime);
 
             session.save(event);
         }
@@ -66,34 +66,34 @@ public class TestPersistentLocalTime extends HibernateTestCase
 
             assertNotNull("get failed - event#'" + i + "'not found", eventReread);
             assertNotNull("get failed - returned null", eventReread.getLocalTime());
-			assertNotNull("get failed - returned null", eventReread.getLocalTime2());
-			assertNotNull("get failed - returned null", eventReread.getLocalTime3());
-			assertNotNull("get failed - returned null", eventReread.getLocalTime4());
+            assertNotNull("get failed - returned null", eventReread.getLocalTime2());
+            assertNotNull("get failed - returned null", eventReread.getLocalTime3());
+            assertNotNull("get failed - returned null", eventReread.getLocalTime4());
 
             // we might loose the millis, depends on database
             assertEquals("get failed - returned different time (TIME)",
                 writeReadTime.getMillisOfDay()/1000,
                 eventReread.getLocalTime().getMillisOfDay()/1000);
 
-			assertEquals("get failed - returned different time (INT)",
-				writeReadTime.getMillisOfDay(),
-				eventReread.getLocalTime2().getMillisOfDay());
+            assertEquals("get failed - returned different time (INT)",
+                writeReadTime.getMillisOfDay(),
+                eventReread.getLocalTime2().getMillisOfDay());
 
-			assertEquals("get failed - returned different time (STRING)",
-				writeReadTime.getMillisOfDay(),
-				eventReread.getLocalTime3().getMillisOfDay());
-			
-			assertEquals("get failed - returned different time (TIMESTAMP)",
-					writeReadTime.getMillisOfDay(),
-					eventReread.getLocalTime4().getMillisOfDay());
+            assertEquals("get failed - returned different time (STRING)",
+                writeReadTime.getMillisOfDay(),
+                eventReread.getLocalTime3().getMillisOfDay());
+            
+            assertEquals("get failed - returned different time (TIMESTAMP)",
+                    writeReadTime.getMillisOfDay(),
+                    eventReread.getLocalTime4().getMillisOfDay());
 
-			session.close();
+            session.close();
         }
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
+    }
 }

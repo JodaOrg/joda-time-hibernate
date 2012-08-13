@@ -62,14 +62,14 @@ public class TestPersistentTimeOfDayExact extends HibernateTestCase
             assertNotNull("get failed - event#'" + i + "'not found", eventReread);
             assertNotNull("get failed - returned null", eventReread.getNextTimeMillis());
 
-			assertEquals("get failed - returned different date.", writeReadTime, eventReread.getNextTimeMillis());
-		}
+            assertEquals("get failed - returned different date.", writeReadTime, eventReread.getNextTimeMillis());
+        }
 
-		session.close();
+        session.close();
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
+    }
 }

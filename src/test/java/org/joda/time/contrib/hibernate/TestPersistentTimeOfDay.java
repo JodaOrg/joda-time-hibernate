@@ -62,25 +62,25 @@ public class TestPersistentTimeOfDay extends HibernateTestCase
             assertNotNull("get failed - event#'" + i + "'not found", eventReread);
             assertNotNull("get failed - returned null", eventReread.getNextTime());
 
-			TimeOfDay reReadTime = eventReread.getNextTime();
-			if (writeReadTime.getHourOfDay() != reReadTime.getHourOfDay() ||
-				writeReadTime.getMinuteOfHour() != reReadTime.getMinuteOfHour() ||
-				writeReadTime.getSecondOfMinute() != reReadTime.getSecondOfMinute())
-			{
-				fail("get failed - returned different date. expected " + writeReadTime + " was " + eventReread.getNextTime());
-			}
+            TimeOfDay reReadTime = eventReread.getNextTime();
+            if (writeReadTime.getHourOfDay() != reReadTime.getHourOfDay() ||
+                writeReadTime.getMinuteOfHour() != reReadTime.getMinuteOfHour() ||
+                writeReadTime.getSecondOfMinute() != reReadTime.getSecondOfMinute())
+            {
+                fail("get failed - returned different date. expected " + writeReadTime + " was " + eventReread.getNextTime());
+            }
 
-			if (writeReadTime.getMillisOfSecond() != reReadTime.getMillisOfSecond())
-			{
-				System.out.println("millis different, might happen?");
-			}
-		}
+            if (writeReadTime.getMillisOfSecond() != reReadTime.getMillisOfSecond())
+            {
+                System.out.println("millis different, might happen?");
+            }
+        }
 
-		session.close();
+        session.close();
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
+    }
 }

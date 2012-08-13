@@ -27,10 +27,10 @@ public class Schedule implements Serializable
 {
     private int id;
     private YearMonthDay startDate;
-	private TimeOfDay nextTime;
-	private TimeOfDay nextTimeMillis;
+    private TimeOfDay nextTime;
+    private TimeOfDay nextTimeMillis;
 
-	public Schedule()
+    public Schedule()
     {
     }
 
@@ -44,33 +44,33 @@ public class Schedule implements Serializable
         this.id = id;
     }
 
-	public YearMonthDay getStartDate()
-	{
-		return startDate;
-	}
+    public YearMonthDay getStartDate()
+    {
+        return startDate;
+    }
 
-	public void setStartDate(YearMonthDay startDate)
-	{
-		this.startDate = startDate;
-	}
+    public void setStartDate(YearMonthDay startDate)
+    {
+        this.startDate = startDate;
+    }
 
-	public TimeOfDay getNextTime()
-	{
-		return nextTime;
-	}
+    public TimeOfDay getNextTime()
+    {
+        return nextTime;
+    }
 
-	public void setNextTime(TimeOfDay nextTime)
-	{
-		this.nextTime = nextTime;
-	}
+    public void setNextTime(TimeOfDay nextTime)
+    {
+        this.nextTime = nextTime;
+    }
 
-	public TimeOfDay getNextTimeMillis()
-	{
-		return nextTimeMillis;
-	}
+    public TimeOfDay getNextTimeMillis()
+    {
+        return nextTimeMillis;
+    }
 
-	public void setNextTimeMillis(TimeOfDay nextTimeMillis)
-	{
-		this.nextTimeMillis = nextTimeMillis;
-	}
+    public void setNextTimeMillis(TimeOfDay nextTimeMillis)
+    {
+        this.nextTimeMillis = nextTimeMillis;
+    }
 }

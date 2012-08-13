@@ -28,8 +28,8 @@ public class TestPersistentInstantAsBigInt extends HibernateTestCase
     private Instant[] writeReadTimes = new Instant[]
     {
         new Instant(0),
-		new Instant(1000),
-		new Instant(1000000)
+        new Instant(1000),
+        new Instant(1000000)
     };
 
     public void testSimpleStore() throws SQLException
@@ -63,18 +63,18 @@ public class TestPersistentInstantAsBigInt extends HibernateTestCase
             assertNotNull("get failed - thing#'" + i + "'not found", thingReread);
             assertNotNull("get failed - returned null", thingReread.getInstant());
 
-			Instant reReadTime = thingReread.getInstant();
-			if (writeReadTime.getMillis() != reReadTime.getMillis())
-			{
-				fail("get failed - returned different date. expected " + writeReadTime + " was " + thingReread.getInstant());
-			}
-		}
+            Instant reReadTime = thingReread.getInstant();
+            if (writeReadTime.getMillis() != reReadTime.getMillis())
+            {
+                fail("get failed - returned different date. expected " + writeReadTime + " was " + thingReread.getInstant());
+            }
+        }
 
-		session.close();
+        session.close();
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/thingWithInstantAsBigInt.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/thingWithInstantAsBigInt.hbm.xml"));
+    }
 }

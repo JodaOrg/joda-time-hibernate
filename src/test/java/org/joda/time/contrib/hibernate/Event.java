@@ -29,14 +29,14 @@ public class Event implements Serializable
 {
     private int id;
     private DateTime dateTime;
-	private LocalDate localDate;
-	private LocalTime localTime;
-	private LocalTime localTime2;
-	private LocalTime localTime3;
-	private LocalTime localTime4;
-	private LocalDateTime localDateTime;
+    private LocalDate localDate;
+    private LocalTime localTime;
+    private LocalTime localTime2;
+    private LocalTime localTime3;
+    private LocalTime localTime4;
+    private LocalDateTime localDateTime;
 
-	public Event()
+    public Event()
     {
     }
 
@@ -60,55 +60,55 @@ public class Event implements Serializable
         this.dateTime = dateTime;
     }
 
-	public LocalDate getLocalDate()
-	{
-		return localDate;
-	}
+    public LocalDate getLocalDate()
+    {
+        return localDate;
+    }
 
-	public void setLocalDate(LocalDate localDate)
-	{
-		this.localDate = localDate;
-	}
+    public void setLocalDate(LocalDate localDate)
+    {
+        this.localDate = localDate;
+    }
 
-	public LocalTime getLocalTime()
-	{
-		return localTime;
-	}
+    public LocalTime getLocalTime()
+    {
+        return localTime;
+    }
 
-	public void setLocalTime(LocalTime localTime)
-	{
-		this.localTime = localTime;
-	}
+    public void setLocalTime(LocalTime localTime)
+    {
+        this.localTime = localTime;
+    }
 
-	public LocalTime getLocalTime2()
-	{
-		return localTime2;
-	}
+    public LocalTime getLocalTime2()
+    {
+        return localTime2;
+    }
 
-	public void setLocalTime2(LocalTime localTime2)
-	{
-		this.localTime2 = localTime2;
-	}
+    public void setLocalTime2(LocalTime localTime2)
+    {
+        this.localTime2 = localTime2;
+    }
 
-	public LocalTime getLocalTime3()
-	{
-		return localTime3;
-	}
+    public LocalTime getLocalTime3()
+    {
+        return localTime3;
+    }
 
-	public void setLocalTime3(LocalTime localTime3)
-	{
-		this.localTime3 = localTime3;
-	}
-	
-	public LocalTime getLocalTime4()
-	{
-		return localTime4;
-	}
+    public void setLocalTime3(LocalTime localTime3)
+    {
+        this.localTime3 = localTime3;
+    }
+    
+    public LocalTime getLocalTime4()
+    {
+        return localTime4;
+    }
 
-	public void setLocalTime4(LocalTime localTime4)
-	{
-		this.localTime4 = localTime4;
-	}
+    public void setLocalTime4(LocalTime localTime4)
+    {
+        this.localTime4 = localTime4;
+    }
 
     public LocalDateTime getLocalDateTime()
     {

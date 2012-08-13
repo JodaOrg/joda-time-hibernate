@@ -32,7 +32,7 @@ public class TestPersistentLocalDateTime extends HibernateTestCase
     };
 
     public void testSimpleStore() throws SQLException
-	{
+    {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
@@ -71,9 +71,9 @@ public class TestPersistentLocalDateTime extends HibernateTestCase
         }
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
+    }
 }

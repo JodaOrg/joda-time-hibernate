@@ -27,8 +27,8 @@ public class TestPersistentDateTimeAsBigInt extends HibernateTestCase
     private DateTime[] writeReadTimes = new DateTime[]
     {
         new DateTime(0),
-		new DateTime(1000),
-		new DateTime(1000000)
+        new DateTime(1000),
+        new DateTime(1000000)
     };
 
     public void testSimpleStore() throws SQLException
@@ -62,18 +62,18 @@ public class TestPersistentDateTimeAsBigInt extends HibernateTestCase
             assertNotNull("get failed - thing#'" + i + "'not found", thingReread);
             assertNotNull("get failed - returned null", thingReread.getDateTime());
 
-			DateTime reReadTime = thingReread.getDateTime();
-			if (writeReadTime.getMillis() != reReadTime.getMillis())
-			{
-				fail("get failed - returned different date. expected " + writeReadTime + " was " + thingReread.getDateTime());
-			}
-		}
+            DateTime reReadTime = thingReread.getDateTime();
+            if (writeReadTime.getMillis() != reReadTime.getMillis())
+            {
+                fail("get failed - returned different date. expected " + writeReadTime + " was " + thingReread.getDateTime());
+            }
+        }
 
-		session.close();
+        session.close();
     }
 
-	protected void setupConfiguration(Configuration cfg)
-	{
-		cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/thingWithDateTimeAsBigInt.hbm.xml"));
-	}
+    protected void setupConfiguration(Configuration cfg)
+    {
+        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/thingWithDateTimeAsBigInt.hbm.xml"));
+    }
 }
