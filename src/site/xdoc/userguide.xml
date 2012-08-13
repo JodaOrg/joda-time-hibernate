@@ -97,6 +97,11 @@ private DateTime startDateTime;
                 <td>Depending on your Database you might loose the millisecond part</td>
             </tr>
             <tr>
+                <td>org.joda.time.contrib.hibernate.PersistentLocalTimeAsTimestamp</td>
+                <td>TIMESTAMP</td>
+                <td></td>
+            </tr>
+            <tr>
                 <td>org.joda.time.contrib.hibernate.PersistentLocalTimeExact</td>
                 <td>INTEGER</td>
                 <td>The milliseconds are stored as simple integer value, no information loss</td>
@@ -115,6 +120,11 @@ private DateTime startDateTime;
                 <td>org.joda.time.contrib.hibernate.PersistentDuration</td>
                 <td>VARCHAR</td>
                 <td>The format is PTnS where n is the value</td>
+            </tr>
+            <tr>
+                <td>org.joda.time.contrib.hibernate.PersistentDurationAsMilliseconds</td>
+                <td>BIGINT</td>
+                <td>Integer milliseconds</td>
             </tr>
             <tr>
                 <td>org.joda.time.contrib.hibernate.PersistentPeriod</td>
