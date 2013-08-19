@@ -25,7 +25,7 @@ As a user of this library you must decide how the LGPL applies to you.
 </p>
 <p>
 As is normal with the <a href="license.html">Apache 2.0 license</a>, a
-NOTICE file exists for Joda-Time Hibernate support:
+NOTICE file exists for Joda-Time-Hibernate:
 <source>
 =============================================================================
 = NOTICE file corresponding to section 4d of the Apache License Version 2.0 =

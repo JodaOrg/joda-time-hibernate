@@ -5,7 +5,7 @@ Joda-Time is a date and time library that vastly improves on the JDK.
 This separate project provides Hibernate database persistence support.
 
 See the home page for more details:
-http://joda-time.sourceforge.net/contrib/hibernate/index.html
+http://www.joda.org/joda-time-hibernate/
 
 The source code is held primarily at GitHub:
 https://github.com/JodaOrg/joda-time-hibernate

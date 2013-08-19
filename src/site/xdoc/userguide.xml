@@ -11,7 +11,7 @@
 
 <section name="Introduction">
 <p>
-Joda-Time Hibernate support provides classes to
+Joda-Time-Hibernate support provides classes to
 persist Joda-Time based date and time objects to a database using Hibernate.
 </p>
 

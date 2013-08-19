@@ -24,8 +24,8 @@ v1.2
 Added persistence for Instant.
 
 
-Feedback
 --------
-All feedback is welcomed at joda-interest@lists.sourceforge.net.
+Home page: http://www.joda.org/joda-time-hibernate/
+GitHub: https://github.com/JodaOrg/joda-time-hibernate
 
 The Joda team
