@@ -16,11 +16,13 @@
 package org.joda.time.contrib.hibernate;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.jdbc.Work;
 import org.joda.time.TimeOfDay;
 
 public class TestPersistentTimeOfDayExact extends HibernateTestCase
@@ -49,7 +51,11 @@ public class TestPersistentTimeOfDayExact extends HibernateTestCase
         }
 
         session.flush();
-        session.connection().commit();
+        session.doWork(new Work() {
+            public void execute(Connection connection) throws SQLException {
+                connection.commit();
+            }
+        });
         session.close();
 
         for (int i = 0; i<writeReadTimes.length; i++)

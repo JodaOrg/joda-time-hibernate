@@ -18,11 +18,13 @@ package org.joda.time.contrib.hibernate;
 import junit.framework.Assert;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.jdbc.Work;
 import org.joda.time.Period;
 import org.joda.time.contrib.hibernate.testmodel.SomethingThatHappens;
 
 import java.io.IOException;
 import java.io.File;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -58,7 +60,11 @@ public class TestPersistentPeriod extends HibernateTestCase {
         }
 
         session.flush();
-        session.connection().commit();
+        session.doWork(new Work() {
+            public void execute(Connection connection) throws SQLException {
+                connection.commit();
+            }
+        });
         session.close();
 
         for (int i = 0; i < periods.length; i++) {
