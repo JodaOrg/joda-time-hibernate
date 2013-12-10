@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.DateTime;
 import org.joda.time.TimeOfDay;
@@ -66,24 +67,21 @@ public class PersistentTimeOfDayExact implements EnhancedUserType, Serializable 
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] strings, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, strings[0]);
-
-    }
-
-    public Object nullSafeGet(ResultSet resultSet, String string) throws SQLException {
-        int value = resultSet.getInt(string);
-        if (resultSet.wasNull()) {
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        int value = rs.getInt(names[0]);
+        if (rs.wasNull()) {
             return null;
         }
         return new TimeOfDay(value);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
         if (value == null) {
-            preparedStatement.setNull(index, SQL_TYPES[0]);
+            statement.setNull(index, SQL_TYPES[0]);
         } else {
-            preparedStatement.setInt(index, (int) ((TimeOfDay) value).toDateTime(timeBase).getMillis());
+            statement.setInt(index, (int) ((TimeOfDay) value).toDateTime(timeBase).getMillis());
         }
     }
 

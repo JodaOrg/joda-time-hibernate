@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.LocalTime;
@@ -61,13 +62,9 @@ public class PersistentLocalTimeExact implements EnhancedUserType, Serializable 
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] strings, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, strings[0]);
-
-    }
-
-    public Object nullSafeGet(ResultSet resultSet, String string) throws SQLException {
-        Object timestamp = StandardBasicTypes.INTEGER.nullSafeGet(resultSet, string);
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        Object timestamp = StandardBasicTypes.INTEGER.nullSafeGet(rs, names[0], session, owner);
         if (timestamp == null) {
             return null;
         }
@@ -75,12 +72,13 @@ public class PersistentLocalTimeExact implements EnhancedUserType, Serializable 
         return LocalTime.fromMillisOfDay(((Number) timestamp).intValue());
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.INTEGER.nullSafeSet(preparedStatement, null, index);
+            StandardBasicTypes.INTEGER.nullSafeSet(statement, null, index, session);
         } else {
             LocalTime lt = ((LocalTime) value);
-            StandardBasicTypes.INTEGER.nullSafeSet(preparedStatement, new Integer(lt.getMillisOfDay()), index);
+            StandardBasicTypes.INTEGER.nullSafeSet(statement, new Integer(lt.getMillisOfDay()), index, session);
         }
     }
 

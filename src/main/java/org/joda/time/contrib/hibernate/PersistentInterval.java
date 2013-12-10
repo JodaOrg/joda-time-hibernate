@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
@@ -91,18 +91,27 @@ public class PersistentInterval implements CompositeUserType, Serializable {
         return false;
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor session, Object owner)
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
             throws HibernateException, SQLException {
-        if (resultSet == null) {
+        if (rs == null) {
             return null;
         }
-        PersistentDateTime pst = new PersistentDateTime();
-        DateTime start = (DateTime) pst.nullSafeGet(resultSet, names[0]);
-        DateTime end = (DateTime) pst.nullSafeGet(resultSet, names[1]);
+        DateTime start = nullSafeGet(rs, names[0], session, owner);
+        DateTime end = nullSafeGet(rs, names[1], session, owner);
         if (start == null || end == null) {
             return null;
         }
         return new Interval(start, end);
+    }
+
+    private DateTime nullSafeGet(ResultSet rs, String name, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        Object timestamp = StandardBasicTypes.TIMESTAMP.nullSafeGet(rs, name, session, owner);
+        if (timestamp == null) {
+            return null;
+        }
+
+        return new DateTime(timestamp);
     }
 
     public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)

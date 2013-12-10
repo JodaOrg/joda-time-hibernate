@@ -23,6 +23,7 @@ import java.sql.Time;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.DateTime;
@@ -67,13 +68,9 @@ public class PersistentTimeOfDay implements EnhancedUserType, Serializable {
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] strings, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, strings[0]);
-
-    }
-
-    public Object nullSafeGet(ResultSet resultSet, String string) throws SQLException {
-        Object date = StandardBasicTypes.TIME.nullSafeGet(resultSet, string);
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        Object date = StandardBasicTypes.TIME.nullSafeGet(rs, names[0], session, owner);
         if (date == null) {
             return null;
         }
@@ -81,12 +78,12 @@ public class PersistentTimeOfDay implements EnhancedUserType, Serializable {
         return new TimeOfDay(date);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.TIME.nullSafeSet(preparedStatement, null, index);
+            StandardBasicTypes.TIME.nullSafeSet(statement, null, index, session);
         } else {
-            StandardBasicTypes.TIME.nullSafeSet(preparedStatement,
-                    new Time(((TimeOfDay) value).toDateTime(timeBase).getMillis()), index);
+            StandardBasicTypes.TIME.nullSafeSet(statement, new Time(((TimeOfDay) value).toDateTime(timeBase).getMillis()), index, session);
         }
     }
 

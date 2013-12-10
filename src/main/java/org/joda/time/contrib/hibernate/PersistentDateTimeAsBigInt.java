@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.DateTime;
@@ -60,23 +61,21 @@ public class PersistentDateTimeAsBigInt implements EnhancedUserType, Serializabl
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] names, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, names[0]);
-    }
-
-    public Object nullSafeGet(ResultSet resultSet, String name) throws HibernateException, SQLException {
-        Object value = StandardBasicTypes.LONG.nullSafeGet(resultSet, name);
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        Object value = StandardBasicTypes.LONG.nullSafeGet(rs, names[0], session, owner);
         if (value == null) {
             return null;
         }
         return new DateTime(value);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.LONG.nullSafeSet(preparedStatement, null, index);
+            StandardBasicTypes.LONG.nullSafeSet(statement, null, index, session);
         } else {
-            StandardBasicTypes.LONG.nullSafeSet(preparedStatement, new Long(((DateTime) value).getMillis()), index);
+            StandardBasicTypes.LONG.nullSafeSet(statement, new Long(((DateTime) value).getMillis()), index, session);
         }
     }
 

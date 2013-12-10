@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.Instant;
@@ -61,23 +62,21 @@ public class PersistentInstant implements EnhancedUserType {
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] names, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, names[0]);
-    }
-
-    public Object nullSafeGet(ResultSet resultSet, String name) throws SQLException {
-        Object value = StandardBasicTypes.TIMESTAMP.nullSafeGet(resultSet, name);
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        Object value = StandardBasicTypes.TIMESTAMP.nullSafeGet(rs, names[0], session, owner);
         if (value == null) {
             return null;
         }
         return new Instant(value);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.TIMESTAMP.nullSafeSet(preparedStatement, null, index);
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(statement, null, index, session);
         } else {
-            StandardBasicTypes.TIMESTAMP.nullSafeSet(preparedStatement, ((Instant) value).toDate(), index);
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(statement, ((Instant) value).toDate(), index, session);
         }
     }
 

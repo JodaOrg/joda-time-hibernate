@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.UserType;
 import org.joda.time.Duration;
@@ -45,10 +46,9 @@ public class PersistentDurationAsMilliseconds implements UserType, Serializable 
         return SQL_TYPES;
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] strings,
-            Object object) throws HibernateException, SQLException {
-        BigInteger b = (BigInteger) StandardBasicTypes.BIG_INTEGER.nullSafeGet(
-                resultSet, strings[0]);
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        BigInteger b = (BigInteger) StandardBasicTypes.BIG_INTEGER.nullSafeGet(rs, names[0], session, owner);
         if (b == null) {
             return null;
         }
@@ -56,14 +56,12 @@ public class PersistentDurationAsMilliseconds implements UserType, Serializable 
         return new Duration(b.longValue());
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value,
-            int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.BIG_INTEGER.nullSafeSet(preparedStatement, null,
-                    index);
+            StandardBasicTypes.BIG_INTEGER.nullSafeSet(statement, null, index, session);
         } else {
-            StandardBasicTypes.BIG_INTEGER.nullSafeSet(preparedStatement,
-                    BigInteger.valueOf((Long) value), index);
+            StandardBasicTypes.BIG_INTEGER.nullSafeSet(statement, BigInteger.valueOf((Long) value), index, session);
         }
     }
 

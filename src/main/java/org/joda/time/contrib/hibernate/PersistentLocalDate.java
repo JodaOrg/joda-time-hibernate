@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.LocalDate;
@@ -61,24 +62,21 @@ public class PersistentLocalDate implements EnhancedUserType, Serializable {
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] strings, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, strings[0]);
-
-    }
-
-    public Object nullSafeGet(ResultSet resultSet, String string) throws SQLException {
-        Object timestamp = StandardBasicTypes.DATE.nullSafeGet(resultSet, string);
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        Object timestamp = StandardBasicTypes.DATE.nullSafeGet(rs, names[0], session, owner);
         if (timestamp == null) {
             return null;
         }
         return new LocalDate(timestamp);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.DATE.nullSafeSet(preparedStatement, null, index);
+            StandardBasicTypes.DATE.nullSafeSet(statement, null, index, session);
         } else {
-            StandardBasicTypes.DATE.nullSafeSet(preparedStatement, ((LocalDate) value).toDateTimeAtStartOfDay().toDate(), index);
+            StandardBasicTypes.DATE.nullSafeSet(statement, ((LocalDate) value).toDateTimeAtStartOfDay().toDate(), index, session);
         }
     }
 
