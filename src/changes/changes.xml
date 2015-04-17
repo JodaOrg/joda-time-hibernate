@@ -8,6 +8,13 @@
 
     <!-- types are add, fix, remove, update -->
     <release version="1.4" date="xxxx-xx-xx" description="Version 1.4">
+      <action dev="jodastephen" type="fix" >
+        Support older dates by round-tripping LocalDate/LocalDateTime via matching Date/Calendar fields.
+        Fixes #8.
+      </action>
+      <action dev="jodastephen" type="update" >
+        Change minimum Joda-Time version to 2.0.
+      </action>
       <action dev="jodastephen" type="add" >
         Home page at GitHub.
       </action>

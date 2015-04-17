@@ -52,7 +52,7 @@ is the current latest release.
 Please bear in mind that this project is separate from Joda-Time itself.
 </p>
 <p>
-The dependencies are Joda-Time 1.5 or later and Hibernate 3.6 (plus associated dependencies).
+The dependencies are Joda-Time 2.0 or later and Hibernate 3.6 (plus associated dependencies).
 The Maven POM defines the dependencies as "provided", so you must specify them independently of this project.
 We recommend JDK 1.5 or later, and have performed no testing on earlier JDKs.
 </p>

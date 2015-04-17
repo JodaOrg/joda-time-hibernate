@@ -20,10 +20,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.hibernate.HibernateException;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -70,6 +73,11 @@ public class PersistentLocalDateTime implements EnhancedUserType, Serializable {
         if (timestamp == null) {
             return null;
         }
+        if (timestamp instanceof Date) {
+            return LocalDateTime.fromDateFields((Date) timestamp);
+        } else if (timestamp instanceof Calendar) {
+            return LocalDateTime.fromCalendarFields((Calendar) timestamp);
+        }
         return new LocalDateTime(timestamp);
     }
 
@@ -77,7 +85,7 @@ public class PersistentLocalDateTime implements EnhancedUserType, Serializable {
         if (value == null) {
             StandardBasicTypes.TIMESTAMP.nullSafeSet(preparedStatement, null, index);
         } else {
-            StandardBasicTypes.TIMESTAMP.nullSafeSet(preparedStatement, ((LocalDateTime) value).toDateTime().toDate(), index);
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(preparedStatement, ((LocalDateTime) value).toDate(), index);
         }
     }
 

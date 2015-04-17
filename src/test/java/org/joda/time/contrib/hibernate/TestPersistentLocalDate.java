@@ -28,7 +28,8 @@ public class TestPersistentLocalDate extends HibernateTestCase
     private LocalDate[] writeReadTimes = new LocalDate[]
     {
         new LocalDate(2004, 2, 25),
-        new LocalDate(1980, 3, 11)
+        new LocalDate(1980, 3, 11),
+        new LocalDate(1700, 1, 1)
     };
 
     public void testSimpleStore() throws SQLException
