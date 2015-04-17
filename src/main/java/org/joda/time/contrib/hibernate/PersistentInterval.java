@@ -35,7 +35,6 @@ import org.joda.time.Interval;
  * to convert the start and end components of an Interval to and from the
  * database correspondents. This class allows clients to execute hibernate or
  * JPA queries using the attribute names "start" and "end." For example,
- * <br />
  * <blockquote>
  * "from Foo where :date is between barInterval.start and barInterval.end"
  * </blockquote>
