@@ -9,7 +9,7 @@
   <artifactId>joda-time-hibernate</artifactId>
   <packaging>jar</packaging>
   <name>Joda-Time-Hibernate</name>
-  <version>1.4</version>
+  <version>1.5-SNAPSHOT</version>
   <description>Contribution to Joda-Time that adds Hibernate support</description>
   <url>http://www.joda.org/joda-time-hibernate/</url>
 
