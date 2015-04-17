@@ -21,6 +21,15 @@
       <action dev="jodastephen" type="update">
         Change to use m2e Maven Eclipse
       </action>
+      <action dev="juradoz" type="add">
+        Add PersistentDurationAsMilliseconds 
+      </action>
+      <action dev="juradoz" type="add">
+        Add PersistentLocalTimeAsTimestamp
+      </action>
+      <action dev="SteveFinch" type="add">
+        Add PersistentDateTimeAsBigInt
+      </action>
     </release>
 
     <release version="1.3" date="2011-05-16" description="Version 1.3">
