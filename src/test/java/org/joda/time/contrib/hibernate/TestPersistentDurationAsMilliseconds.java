@@ -17,32 +17,30 @@ package org.joda.time.contrib.hibernate;
 
 import junit.framework.Assert;
 import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.contrib.hibernate.testmodel.SomethingThatLasts;
 
 import java.io.IOException;
-import java.io.File;
 import java.sql.SQLException;
+import org.hibernate.Transaction;
 
 /**
  * @author gjoseph
  * @author $Author: $ (last edit)
  * @version $Revision: $
  */
+@HbmFiles("src/test/java/org/joda/time/contrib/hibernate/testmodel/SomethingThatLastsInMilliseconds.hbm.xml")
 public class TestPersistentDurationAsMilliseconds extends HibernateTestCase {
-    protected void setupConfiguration(Configuration cfg) {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/testmodel/SomethingThatLastsInMilliseconds.hbm.xml"));
-    }
 
-    private Duration[] durations = new Duration[]{
+    private final Duration[] durations = new Duration[]{
             Duration.ZERO, new Duration(30), Period.seconds(30).toDurationTo(new DateTime()), Period.months(3).toDurationFrom(new DateTime())
     };
 
     public void testSimpleStore() throws SQLException, IOException {
         Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i < durations.length; i++) {
             SomethingThatLasts thing = new SomethingThatLasts();
@@ -50,10 +48,12 @@ public class TestPersistentDurationAsMilliseconds extends HibernateTestCase {
             thing.setName("test_" + i);
             thing.setTheDuration(durations[i]);
             session.save(thing);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i < durations.length; i++) {

@@ -15,28 +15,33 @@
  */
 package org.joda.time.contrib.hibernate;
 
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+@HbmFiles({
+    "src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml", 
+    "src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"
+})
 public class TestPersistentDateTime extends HibernateTestCase
 {
-    private DateTime[] writeReadTimes = new DateTime[]
+    private final DateTime[] writeReadTimes = new DateTime[]
     {
         new DateTime(2004, 2, 25, 17, 3, 45, 760),
         new DateTime(1980, 3, 11,  2, 3, 45,   0, DateTimeZone.forOffsetHours(2))
     };
 
-    public void testSimpleStore() throws SQLException
+    public void testSimpleStore() throws SQLException, IOException
     {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i<writeReadTimes.length; i++)
         {
@@ -47,10 +52,12 @@ public class TestPersistentDateTime extends HibernateTestCase
             event.setDateTime(writeReadTime);
 
             session.save(event);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i<writeReadTimes.length; i++)
@@ -72,11 +79,12 @@ public class TestPersistentDateTime extends HibernateTestCase
         }
     }
 
-    public void testStoreWithTimezone() throws SQLException
+    public void testStoreWithTimezone() throws SQLException, IOException
     {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i<writeReadTimes.length; i++)
         {
@@ -87,10 +95,12 @@ public class TestPersistentDateTime extends HibernateTestCase
             event.setDateTime(writeReadTime);
 
             session.save(event);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i<writeReadTimes.length; i++)
@@ -110,9 +120,4 @@ public class TestPersistentDateTime extends HibernateTestCase
         session.close();
     }
 
-    protected void setupConfiguration(Configuration cfg)
-    {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
-    }
 }

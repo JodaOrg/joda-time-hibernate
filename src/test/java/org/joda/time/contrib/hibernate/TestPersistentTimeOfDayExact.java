@@ -15,27 +15,29 @@
  */
 package org.joda.time.contrib.hibernate;
 
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 import org.joda.time.TimeOfDay;
 
+@HbmFiles("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml")
 public class TestPersistentTimeOfDayExact extends HibernateTestCase
 {
-    private TimeOfDay[] writeReadTimes = new TimeOfDay[]
+    private final TimeOfDay[] writeReadTimes = new TimeOfDay[]
     {
         new TimeOfDay(12, 10, 31),
         new TimeOfDay(23,  7, 43, 120)
     };
 
-    public void testSimpleStore() throws SQLException
+    public void testSimpleStore() throws SQLException, IOException
     {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i<writeReadTimes.length; i++)
         {
@@ -46,10 +48,12 @@ public class TestPersistentTimeOfDayExact extends HibernateTestCase
             event.setNextTimeMillis(writeReadTime);
 
             session.save(event);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i<writeReadTimes.length; i++)
@@ -68,8 +72,4 @@ public class TestPersistentTimeOfDayExact extends HibernateTestCase
         session.close();
     }
 
-    protected void setupConfiguration(Configuration cfg)
-    {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
-    }
 }

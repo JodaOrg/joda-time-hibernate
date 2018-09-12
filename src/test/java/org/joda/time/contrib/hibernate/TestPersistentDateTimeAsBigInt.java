@@ -15,27 +15,29 @@
  */
 package org.joda.time.contrib.hibernate;
 
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 import org.joda.time.DateTime;
 
+@HbmFiles("src/test/java/org/joda/time/contrib/hibernate/thingWithDateTimeAsBigInt.hbm.xml")
 public class TestPersistentDateTimeAsBigInt extends HibernateTestCase
 {
-    private DateTime[] writeReadTimes = new DateTime[]
+    private final DateTime[] writeReadTimes = new DateTime[]
     {
         new DateTime(0),
         new DateTime(1000),
         new DateTime(1000000)
     };
 
-    public void testSimpleStore() throws SQLException
+    public void testSimpleStore() throws SQLException, IOException
     {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i<writeReadTimes.length; i++)
         {
@@ -46,10 +48,12 @@ public class TestPersistentDateTimeAsBigInt extends HibernateTestCase
             thing.setDateTime(writeReadTime);
 
             session.save(thing);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i<writeReadTimes.length; i++)
@@ -72,8 +76,4 @@ public class TestPersistentDateTimeAsBigInt extends HibernateTestCase
         session.close();
     }
 
-    protected void setupConfiguration(Configuration cfg)
-    {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/thingWithDateTimeAsBigInt.hbm.xml"));
-    }
 }
