@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.LocalDate;
@@ -63,13 +64,13 @@ public class PersistentLocalDate implements EnhancedUserType, Serializable {
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] strings, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, strings[0]);
+    public Object nullSafeGet(ResultSet resultSet, String[] strings, SharedSessionContractImplementor session, Object object) throws HibernateException, SQLException {
+        return nullSafeGet(resultSet, strings[0], session);
 
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String string) throws SQLException {
-        Object timestamp = StandardBasicTypes.DATE.nullSafeGet(resultSet, string);
+    public Object nullSafeGet(ResultSet resultSet, String string, SharedSessionContractImplementor session) throws SQLException {
+        Object timestamp = StandardBasicTypes.DATE.nullSafeGet(resultSet, string, session);
         if (timestamp == null) {
             return null;
         }
@@ -81,11 +82,11 @@ public class PersistentLocalDate implements EnhancedUserType, Serializable {
         return new LocalDate(timestamp);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.DATE.nullSafeSet(preparedStatement, null, index);
+            StandardBasicTypes.DATE.nullSafeSet(preparedStatement, null, index, session);
         } else {
-            StandardBasicTypes.DATE.nullSafeSet(preparedStatement, ((LocalDate) value).toDate(), index);
+            StandardBasicTypes.DATE.nullSafeSet(preparedStatement, ((LocalDate) value).toDate(), index, session);
         }
     }
 

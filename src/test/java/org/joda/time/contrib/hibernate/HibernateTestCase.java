@@ -15,64 +15,96 @@
  */
 package org.joda.time.contrib.hibernate;
 
+import java.lang.annotation.Annotation;
+import java.sql.SQLException;
 import junit.framework.TestCase;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.HSQLDialect;
-import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
-import java.sql.Connection;
-import java.sql.Statement;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Environment;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.tool.schema.TargetType;
 
 public abstract class HibernateTestCase extends TestCase
 {
-    private SessionFactory factory;
-    private Configuration cfg;
-
+    private SessionFactory sessionFactory;
+    private MetadataSources metadataSources;
+    private Metadata metadata;
+    
+    @Override
+    protected void setUp() throws Exception {
+        HbmFiles annotation = getClass().getAnnotation(HbmFiles.class);
+        if (annotation != null) {
+            String[] files = annotation.value();
+            
+            MetadataSources sources = getMetadataSources();
+            createDatabase(getMetadata(files));
+        }
+    }
+    
     protected SessionFactory getSessionFactory()
     {
-        if (this.factory == null)
+        if (this.sessionFactory == null)
         {
-                    cfg = new Configuration();
-
-                    setupConfiguration(cfg);
-
-            cfg.setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver");
-            cfg.setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:hbmtest" + getClass().getName());
-            cfg.setProperty("hibernate.dialect", HSQLDialect.class.getName());
-
-            cfg.setProperty("hibernate.show_sql", "true");
-            SessionFactory factory = cfg.buildSessionFactory();
-
-            SchemaUpdate update = new SchemaUpdate(cfg);
-            update.execute(true, true);
-
-            this.factory = factory;
+            sessionFactory = metadata.getSessionFactoryBuilder().build();
         }
-        return factory;
+        return sessionFactory;
     }
 
-    protected void tearDown() throws Exception
-    {
-            final String[] dropSQLs = cfg.generateDropSchemaScript(new HSQLDialect());
-            final Connection connection = getSessionFactory().openSession().connection();
-            try {
-                Statement stmt = connection.createStatement();
-                for (int i = 0; i < dropSQLs.length; i++) {
-                    //System.out.println("dropSQLs[i] = " + dropSQLs[i]);
-                    stmt.executeUpdate(dropSQLs[i]);
-                }
-            } finally {
-                connection.close();
+    @Override
+    protected void tearDown() throws Exception {
+        SchemaExport export = new SchemaExport();
+        export.drop(EnumSet.of(TargetType.DATABASE), metadata);
+    }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    private void createDatabase(final Metadata metadata) {
+        SchemaExport export = new SchemaExport();
+        export.create(EnumSet.of(TargetType.DATABASE), metadata);
+    }
+    
+    private MetadataSources getMetadataSources() {
+        if (metadataSources == null) {
+            final StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
+
+            Map<String, String> settings = new HashMap<>();
+            settings.put(Environment.DRIVER, "org.hsqldb.jdbcDriver");
+            settings.put(Environment.URL, "jdbc:hsqldb:mem:hbmtest" + getClass().getName());
+            settings.put(Environment.DIALECT, HSQLDialect.class.getName());
+            settings.put(Environment.SHOW_SQL, Boolean.TRUE.toString());
+
+            registryBuilder.applySettings(settings);
+
+            StandardServiceRegistry registry = registryBuilder.build();
+
+            metadataSources = new MetadataSources(registry);
+        }
+        
+        return metadataSources;
+    }
+    
+    private Metadata getMetadata(String... configFiles) {
+        if (this.sessionFactory == null) {
+            if (metadataSources == null) {
+                metadataSources = getMetadataSources();
             }
-
-            if (this.factory != null)
-        {
-            this.factory.close();
-            this.factory = null;
+            for (final String configFile : configFiles) {
+                metadataSources.addFile(configFile);
+            }
+            metadata = metadataSources.getMetadataBuilder().build();
         }
+        return metadata;
     }
 
-    protected abstract void setupConfiguration(Configuration cfg);
 }

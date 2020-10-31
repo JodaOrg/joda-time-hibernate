@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.DateTime;
 import org.joda.time.TimeOfDay;
@@ -66,12 +67,12 @@ public class PersistentTimeOfDayExact implements EnhancedUserType, Serializable 
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] strings, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, strings[0]);
+    public Object nullSafeGet(ResultSet resultSet, String[] strings, SharedSessionContractImplementor session, Object object) throws HibernateException, SQLException {
+        return nullSafeGet(resultSet, strings[0], session);
 
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String string) throws SQLException {
+    public Object nullSafeGet(ResultSet resultSet, String string, SharedSessionContractImplementor session) throws SQLException {
         int value = resultSet.getInt(string);
         if (resultSet.wasNull()) {
             return null;
@@ -79,7 +80,7 @@ public class PersistentTimeOfDayExact implements EnhancedUserType, Serializable 
         return new TimeOfDay(value);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
         if (value == null) {
             preparedStatement.setNull(index, SQL_TYPES[0]);
         } else {

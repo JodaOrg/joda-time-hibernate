@@ -15,28 +15,30 @@
  */
 package org.joda.time.contrib.hibernate;
 
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.joda.time.Interval;
 
+@HbmFiles("src/test/java/org/joda/time/contrib/hibernate/plan.hbm.xml")
 public class TestPersistentIntervalNull extends HibernateTestCase
 {
     private SessionFactory factory;
     private Session session;
     private Transaction transaction;
     
-    protected void setUp() throws SQLException
+    @Override
+    protected void setUp() throws Exception
     {
+        super.setUp();
         factory = getSessionFactory();
         store();
     }
     
-    private void store() throws SQLException
+    private void store() throws SQLException, IOException
     {
         openAndBegin();
         
@@ -55,13 +57,13 @@ public class TestPersistentIntervalNull extends HibernateTestCase
         transaction = session.beginTransaction();
     }
     
-    private void commitAndClose()
+    private void commitAndClose() throws IOException
     {
         transaction.commit();
         session.close();
     }
     
-    public void testQueryById() throws SQLException
+    public void testQueryById() throws SQLException, IOException
     {
         openAndBegin();
         Interval persistedPeriod = queryPlan().getPeriod();
@@ -79,18 +81,14 @@ public class TestPersistentIntervalNull extends HibernateTestCase
         return (Plan) session.get(Plan.class, new Integer(1));
     }
     
-    protected void setupConfiguration(Configuration cfg)
-    {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/plan.hbm.xml"));
-    }
-    
+    @Override
     protected void tearDown() throws Exception
     {
         remove();
         super.tearDown();
     }
 
-    private void remove()
+    private void remove() throws IOException
     {
         openAndBegin();
         session.delete(queryPlan());

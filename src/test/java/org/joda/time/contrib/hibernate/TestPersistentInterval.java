@@ -15,7 +15,7 @@
  */
 package org.joda.time.contrib.hibernate;
 
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,10 +23,10 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+@HbmFiles("src/test/java/org/joda/time/contrib/hibernate/plan.hbm.xml")
 public class TestPersistentInterval extends HibernateTestCase
 {
     private SessionFactory factory;
@@ -36,14 +36,16 @@ public class TestPersistentInterval extends HibernateTestCase
     private Transaction transaction;
     private String intervalQuery;
     
-    protected void setUp() throws SQLException
+    @Override
+    protected void setUp() throws Exception
     {
+        super.setUp();
         factory = getSessionFactory();
         store();
         intervalQuery = "from Plan where :aDate between period.start and period.end";
     }
     
-    private void store() throws SQLException
+    private void store() throws SQLException, IOException
     {
         openAndBegin();
         
@@ -66,13 +68,13 @@ public class TestPersistentInterval extends HibernateTestCase
         transaction = session.beginTransaction();
     }
     
-    private void commitAndClose()
+    private void commitAndClose() throws IOException
     {
         transaction.commit();
         session.close();
     }
     
-    public void testQueryById() throws SQLException
+    public void testQueryById() throws SQLException, IOException
     {
         openAndBegin();
         Interval persistedPeriod = queryPlan().getPeriod();
@@ -91,7 +93,7 @@ public class TestPersistentInterval extends HibernateTestCase
         return (Plan) session.get(Plan.class, new Integer(1));
     }
     
-    public void testQueryInsideInterval() throws SQLException
+    public void testQueryInsideInterval() throws SQLException, IOException
     {
         openAndBegin();
         DateTime includedDateTime = new DateTime(2004, 1, 10, 0, 0, 0, 0);
@@ -103,7 +105,7 @@ public class TestPersistentInterval extends HibernateTestCase
         assertPlanPeriod(((Plan) queriedPlans.get(0)).getPeriod());
     }
     
-    public void testQueryOutsideInterval()
+    public void testQueryOutsideInterval() throws IOException
     {
         openAndBegin();
         DateTime excludedDateTime = new DateTime(2007, 1, 10, 0, 0, 0, 0);
@@ -114,18 +116,14 @@ public class TestPersistentInterval extends HibernateTestCase
         assertEquals(0, queriedPlans.size());
     }
 
-    protected void setupConfiguration(Configuration cfg)
-    {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/plan.hbm.xml"));
-    }
-    
+    @Override
     protected void tearDown() throws Exception
     {
         remove();
         super.tearDown();
     }
 
-    private void remove()
+    private void remove() throws IOException
     {
         openAndBegin();
         session.delete(queryPlan());

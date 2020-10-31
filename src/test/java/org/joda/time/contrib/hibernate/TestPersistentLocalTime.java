@@ -15,17 +15,21 @@
  */
 package org.joda.time.contrib.hibernate;
 
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 import org.joda.time.LocalTime;
 
+@HbmFiles({
+        "src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml",
+        "src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"
+})
 public class TestPersistentLocalTime extends HibernateTestCase
 {
-    private LocalTime[] writeReadTimes = new LocalTime[]
+    private final LocalTime[] writeReadTimes = new LocalTime[]
     {
         new LocalTime(14, 2, 25),
         new LocalTime(23, 59, 59, 999),
@@ -33,11 +37,12 @@ public class TestPersistentLocalTime extends HibernateTestCase
         new LocalTime(12, 02, 15)
     };
 
-    public void testSimpleStore() throws SQLException
+    public void testSimpleStore() throws SQLException, IOException
     {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i<writeReadTimes.length; i++)
         {
@@ -51,10 +56,12 @@ public class TestPersistentLocalTime extends HibernateTestCase
             event.setLocalTime4(writeReadTime);
 
             session.save(event);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i<writeReadTimes.length; i++)
@@ -91,9 +98,4 @@ public class TestPersistentLocalTime extends HibernateTestCase
         }
     }
 
-    protected void setupConfiguration(Configuration cfg)
-    {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/event.hbm.xml"));
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/eventTZ.hbm.xml"));
-    }
 }

@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.EnhancedUserType;
 import org.joda.time.Instant;
@@ -61,23 +62,23 @@ public class PersistentInstantAsBigInt implements EnhancedUserType, Serializable
         return object.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] names, Object object) throws HibernateException, SQLException {
-        return nullSafeGet(resultSet, names[0]);
+    public Object nullSafeGet(ResultSet resultSet, String[] names, SharedSessionContractImplementor session, Object object) throws HibernateException, SQLException {
+        return nullSafeGet(resultSet, names[0], session);
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String name) throws HibernateException, SQLException {
-        Object value = StandardBasicTypes.LONG.nullSafeGet(resultSet, name);
+    public Object nullSafeGet(ResultSet resultSet, String name, SharedSessionContractImplementor session) throws HibernateException, SQLException {
+        Object value = StandardBasicTypes.LONG.nullSafeGet(resultSet, name, session);
         if (value == null) {
             return null;
         }
         return new Instant(value);
     }
 
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
         if (value == null) {
-            StandardBasicTypes.LONG.nullSafeSet(preparedStatement, null, index);
+            StandardBasicTypes.LONG.nullSafeSet(preparedStatement, null, index, session);
         } else {
-            StandardBasicTypes.LONG.nullSafeSet(preparedStatement, new Long(((Instant) value).getMillis()), index);
+            StandardBasicTypes.LONG.nullSafeSet(preparedStatement, new Long(((Instant) value).getMillis()), index, session);
         }
     }
 

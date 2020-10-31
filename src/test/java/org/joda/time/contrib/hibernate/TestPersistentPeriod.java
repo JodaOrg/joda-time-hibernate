@@ -17,25 +17,22 @@ package org.joda.time.contrib.hibernate;
 
 import junit.framework.Assert;
 import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
 import org.joda.time.Period;
 import org.joda.time.contrib.hibernate.testmodel.SomethingThatHappens;
 
 import java.io.IOException;
-import java.io.File;
 import java.sql.SQLException;
+import org.hibernate.Transaction;
 
 /**
  * @author gjoseph
  * @author $Author: $ (last edit)
  * @version $Revision: $
  */
+@HbmFiles("src/test/java/org/joda/time/contrib/hibernate/testmodel/SomethingThatHappens.hbm.xml")
 public class TestPersistentPeriod extends HibernateTestCase {
-    protected void setupConfiguration(Configuration cfg) {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/testmodel/SomethingThatHappens.hbm.xml"));
-    }
 
-    private Period[] periods = new Period[]{
+    private final Period[] periods = new Period[]{
             Period.days(2), Period.seconds(30), Period.months(3),
             new Period(30), new Period(4, 35, 40, 141),
             new Period(28, 10, 2, 2, 4, 35, 40, 141), new Period(28, 10, 0, 16, 4, 35, 40, 141),
@@ -48,6 +45,7 @@ public class TestPersistentPeriod extends HibernateTestCase {
 
     public void testSimpleStore() throws SQLException, IOException {
         Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i < periods.length; i++) {
             SomethingThatHappens thing = new SomethingThatHappens();
@@ -55,10 +53,12 @@ public class TestPersistentPeriod extends HibernateTestCase {
             thing.setName("test_" + i);
             thing.setThePeriod(periods[i]);
             session.save(thing);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i < periods.length; i++) {

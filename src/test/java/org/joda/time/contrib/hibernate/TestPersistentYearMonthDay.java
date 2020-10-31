@@ -15,27 +15,29 @@
  */
 package org.joda.time.contrib.hibernate;
 
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 import org.joda.time.YearMonthDay;
 
+@HbmFiles("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml")
 public class TestPersistentYearMonthDay extends HibernateTestCase
 {
-    private YearMonthDay[] writeReadTimes = new YearMonthDay[]
+    private final YearMonthDay[] writeReadTimes = new YearMonthDay[]
     {
         new YearMonthDay(2004, 2, 25),
         new YearMonthDay(1980, 3, 11)
     };
 
-    public void testSimpleStore() throws SQLException
+    public void testSimpleStore() throws SQLException, IOException
     {
         SessionFactory factory = getSessionFactory();
 
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
 
         for (int i = 0; i<writeReadTimes.length; i++)
         {
@@ -46,10 +48,12 @@ public class TestPersistentYearMonthDay extends HibernateTestCase
             event.setStartDate(writeReadTime);
 
             session.save(event);
+            session.flush();
+            session.clear();
         }
 
         session.flush();
-        session.connection().commit();
+        transaction.commit();
         session.close();
 
         for (int i = 0; i<writeReadTimes.length; i++)
@@ -68,8 +72,4 @@ public class TestPersistentYearMonthDay extends HibernateTestCase
         session.close();
     }
 
-    protected void setupConfiguration(Configuration cfg)
-    {
-        cfg.addFile(new File("src/test/java/org/joda/time/contrib/hibernate/schedule.hbm.xml"));
-    }
 }
