@@ -25,7 +25,7 @@
     <developer>
       <id>imario</id>
       <name>Mario Ivankovits</name>
-      <email></email>
+      <email/>
       <roles>
         <role>Lead developer</role>
       </roles>
@@ -33,7 +33,7 @@
     <developer>
       <id>gjoseph</id>
       <name>Gregory Joseph</name>
-      <email></email>
+      <email/>
       <roles>
         <role>Developer</role>
       </roles>
@@ -317,13 +317,13 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>3.6.0.Final</version>
+      <version>5.4.24.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
-      <version>3.6.0.Final</version>
+      <version>5.4.24.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
